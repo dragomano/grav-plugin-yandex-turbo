@@ -1,0 +1,40 @@
+name: Yandex Turbo
+slug: yandex-turbo
+type: plugin
+version: 0.1.0
+description: "Generates a special **RSS feed** with blog pages, in accordiate with the Yandex.Turbo technology."
+icon: rss
+author:
+  name: Bugo
+  email: bugo@dragomano.ru
+homepage: https://github.com/dragomano/grav-plugin-yandex-turbo
+keywords: yandex turbo, plugin, rss
+bugs: https://github.com/dragomano/grav-plugin-yandex-turbo/issues
+license: MIT
+
+dependencies:
+    - { name: grav, version: '>=1.6.0' }
+
+form:
+  validation: loose
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+
+    feed_title:
+      type: text
+      size: medium
+      label: PLUGIN_YANDEX_TURBO.FEED_TITLE
+
+    feed_description:
+      type: text
+      size: medium
+      label: PLUGIN_YANDEX_TURBO.FEED_DESCRIPTION

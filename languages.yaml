@@ -1,0 +1,11 @@
+en:
+  PLUGIN_YANDEX_TURBO:
+    TITLE: 'Yandex.Turbo'
+    FEED_TITLE: 'RSS Feed Title'
+    FEED_DESCRIPTION: 'RSS Feed Description'
+
+ru:
+  PLUGIN_YANDEX_TURBO:
+    TITLE: 'Яндекс.Турбо'
+    FEED_TITLE: 'Заголовок ленты RSS'
+    FEED_DESCRIPTION: 'Описание ленты RSS'

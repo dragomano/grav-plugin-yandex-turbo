@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">
+    <channel>
+        <title>{{ config.plugins['yandex-turbo'].feed_title ?: site.title }}</title>
+        <link>{{ uri.rootUrl(true) }}</link>
+        <description>{{ config.plugins['yandex-turbo'].feed_description ?: site.metadata.description ?: site.title }}</description>
+        <language>{{ site.default_lang }}</language>
+
+{% for item in items %}
+        <item turbo="true">
+            <link>{{ item.link }}</link>
+            <pubDate>{{ item.created|date('D, d M Y H:i:s O') }}</pubDate>
+            <author>{{ page.header.author ?: site.author.name }}</author>
+            <turbo:content>
+                <![CDATA[
+                    <header>
+                        <h1>{{ item.title ?: site.title }}</h1>
+
+{% if item.media %}
+{% set first_image = item.media|first %}
+                        <figure>
+                            <img src="{{ uri.base }}{{ first_image.cropResize(300,200).grayscale().url }}" />
+                        </figure>
+{% endif %}
+
+                    </header>
+                    {{ item.content|safe_truncate_html }}
+                ]]>
+            </turbo:content>
+        </item>
+{% endfor %}
+
+    </channel>
+</rss>
