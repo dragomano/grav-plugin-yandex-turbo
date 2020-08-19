@@ -15,6 +15,8 @@ class YandexTurboPlugin extends Plugin
     protected $items = [];
 
     /**
+     * Subscribe to required events
+     *
      * @return array
      */
     public static function getSubscribedEvents()
@@ -64,35 +66,40 @@ class YandexTurboPlugin extends Plugin
     }
 
     /**
+     * Add current directory to twig lookup paths.
+     *
+     * @return void
+     */
+    public function onTwigTemplatePaths()
+    {
+        $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
+    }
+
+    /**
      * Generate data for the turbo pages.
      *
      * @return void
      */
     public function onPagesInitialized()
     {
-        $grav = Grav::instance();
-        $current_lang = $grav['language']->getLanguage() ?: 'en';
-
         /** @var Pages $pages */
         $pages = $this->grav['pages'];
-        $routes = array_unique(array_slice($pages->routes(), 0, 1000));
-        ksort($routes);
+        $collection = $pages->all();
+        $collection = $collection->visible()->published()->routable()->order('date', 'desc')->slice(0, 1000);
 
-        foreach ($routes as $route => $path) {
-            $page = $pages->get($path);
+        foreach ($collection as $page) {
             $header = $page->header();
-            $external_url = isset($header->external_url);
-            $protected_page = isset($header->access);
-            $page_ignored = $protected_page || $external_url;
+            $page_ignored = isset($header->external_url) || isset($header->access);
 
-            if ($page->published() && $page->routable() && !$page_ignored) {
+            if (!$page_ignored) {
                 $entry = new \stdClass();
                 $entry->title = $page->title();
                 $entry->link = $page->canonical();
-                $entry->created = $page->date();
+                $entry->date = date(DATE_RFC822, $page->date());
+                $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
                 $entry->media = $page->media()->images();
-                $entry->content = $header->metadata['description'] ?: strip_tags($page->summary()) ?: $page->metadata()['description']['content'];
-                $this->items[$route] = $entry;
+                $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
+                $this->items[$page->route()] = $entry;
             }
         }
 
@@ -118,16 +125,6 @@ class YandexTurboPlugin extends Plugin
             $twig = $this->grav['twig'];
             $twig->template = 'turbo.rss.twig';
         }
-    }
-
-    /**
-     * Add current directory to twig lookup paths.
-     *
-     * @return void
-     */
-    public function onTwigTemplatePaths()
-    {
-        $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
 
     /**

@@ -9,20 +9,18 @@
 {% for item in items %}
         <item turbo="true">
             <link>{{ item.link }}</link>
-            <pubDate>{{ item.created|date('D, d M Y H:i:s O') }}</pubDate>
-            <author>{{ page.header.author ?: site.author.name }}</author>
+            <pubDate>{{ item.date }}</pubDate>
+            <author>{{ item.author ?: site.author.name }}</author>
             <turbo:content>
                 <![CDATA[
                     <header>
                         <h1>{{ item.title ?: site.title }}</h1>
-
 {% if item.media %}
 {% set first_image = item.media|first %}
                         <figure>
                             <img src="{{ uri.base }}{{ first_image.cropResize(300,200).grayscale().url }}" />
                         </figure>
 {% endif %}
-
                     </header>
                     {{ item.content|safe_truncate_html }}
                 ]]>
