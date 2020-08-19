@@ -1,8 +1,8 @@
 {
   "name": "dragomano/yandex-turbo",
   "type": "grav-plugin",
-  "description": "Generates a special RSS feed with blog pages, in accordiate with the Yandex.Turbo technology",
-  "keywords": ["plugin", "yandex turbo", "rss"],
+  "description": "Generates a special RSS feed with blog pages, in accordance with the Yandex.Turbo technology.",
+  "keywords": ["grav", "grav-plugin", "yandex-turbo", "rss"],
   "homepage": "https://github.com/dragomano/grav-plugin-yandex-turbo",
   "license": "MIT",
   "authors": [
