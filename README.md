@@ -1,6 +1,6 @@
 # Yandex Turbo Plugin
 
-The **Yandex Turbo** Plugin is an extension for [Grav CMS](https://github.com/getgrav/grav) that generates a RSS feed of your blog in accordiate with the [Yandex.Turbo](https://tech.yandex.com/turbo/) technology.
+The **Yandex Turbo** Plugin is an extension for [Grav CMS](https://github.com/getgrav/grav) that generates a RSS feed of your blog in accordance with the [Yandex.Turbo](https://tech.yandex.com/turbo/) technology.
 
 ## Installation
 

@@ -1,14 +1,14 @@
 name: Yandex Turbo
 slug: yandex-turbo
 type: plugin
-version: 0.1.0
-description: "Generates a special **RSS feed** with blog pages, in accordiate with the Yandex.Turbo technology."
+version: 0.1.1
+description: "Generates a special **RSS feed** with blog pages, in accordance with the Yandex.Turbo technology."
 icon: rss
 author:
   name: Bugo
   email: bugo@dragomano.ru
 homepage: https://github.com/dragomano/grav-plugin-yandex-turbo
-keywords: yandex turbo, plugin, rss
+keywords: grav, grav-plugin, yandex-turbo, rss
 bugs: https://github.com/dragomano/grav-plugin-yandex-turbo/issues
 license: MIT
 
