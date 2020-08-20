@@ -82,24 +82,37 @@ class YandexTurboPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        /** @var Pages $pages */
-        $pages = $this->grav['pages'];
-        $collection = $pages->all();
-        $collection = $collection->visible()->published()->routable()->order('date', 'desc')->slice(0, 1000);
+        if ($this->config->get('plugins.yandex-turbo.enable_cache')) {
+            $cache = Grav::instance()['cache'];
+            $cache_id = md5('yandex_turbo_plugin');
+        }
 
-        foreach ($collection as $page) {
-            $header = $page->header();
-            $page_ignored = isset($header->external_url) || isset($header->access);
+        if ($cache_id && $data = $cache->fetch($cache_id)) {
+            $this->items = $data;
+        } else {
+            /** @var Pages $pages */
+            $pages = $this->grav['pages'];
+            $collection = $pages->all();
+            $collection = $collection->visible()->published()->routable()->order('date', 'desc')->slice(0, 1000);
 
-            if (!$page_ignored) {
-                $entry = new \stdClass();
-                $entry->title = $page->title();
-                $entry->link = $page->canonical();
-                $entry->date = date(DATE_RFC822, $page->date());
-                $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
-                $entry->media = $page->media()->images();
-                $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
-                $this->items[$page->route()] = $entry;
+            foreach ($collection as $page) {
+                $header = $page->header();
+                $page_ignored = isset($header->external_url) || isset($header->access);
+
+                if (!$page_ignored) {
+                    $entry = new \stdClass();
+                    $entry->title = $page->title();
+                    $entry->link = $page->canonical();
+                    $entry->date = date(DATE_RFC822, $page->date());
+                    $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
+                    $entry->media = $page->media()->images();
+                    $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
+                    $this->items[$page->route()] = $entry;
+                }
+            }
+
+            if ($cache_id) {
+                $cache->save($cache_id, $this->items);
             }
         }
 
