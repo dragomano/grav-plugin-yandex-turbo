@@ -45,6 +45,9 @@ Before configuring this plugin, you should copy the `user/plugins/yandex-turbo/y
 ```yaml
 enabled: true
 route: '/turbo'
+feed_title: null
+feed_description: null
+enable_cache: false
 ```
 
 Note that if you use the Admin Plugin, a file with your configuration named yandex-turbo.yaml will be saved in the `user/config/plugins/`-folder once the configuration is saved in the Admin.

@@ -7,7 +7,7 @@
         <language>{{ site.default_lang }}</language>
 
 {% for item in items %}
-        <item turbo="true">
+        <item turbo="{{ item.active ? 'true' : 'false' }}">
             <link>{{ item.link }}</link>
             <pubDate>{{ item.date }}</pubDate>
             <author>{{ item.author ?: site.author.name }}</author>

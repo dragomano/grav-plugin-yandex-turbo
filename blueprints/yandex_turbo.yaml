@@ -1,0 +1,26 @@
+form:
+  fields:
+    tabs:
+      fields:
+        options:
+          type: tab
+
+          fields:
+
+            yandex_turbo:
+              type: section
+              title: PLUGIN_YANDEX_TURBO.TITLE
+              underline: true
+
+              fields:
+                header.yandex_turbo.active:
+                  type: toggle
+                  toggleable: true
+                  label: PLUGIN_YANDEX_TURBO.HEADER_ACTIVE
+                  highlight: 1
+                  options:
+                    1: PLUGIN_ADMIN.YES
+                    0: PLUGIN_ADMIN.NO
+                  validate:
+                    type: bool
+                    required: false

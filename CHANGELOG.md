@@ -1,3 +1,9 @@
+# v0.3.0
+## 08/22/2020
+
+1. [](#new)
+    * Added support of "active: true" and "active: false" options (frontmatter's header)
+
 # v0.2.0
 ##  08/20/2020
 

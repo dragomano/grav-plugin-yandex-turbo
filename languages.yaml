@@ -4,6 +4,7 @@ en:
     FEED_TITLE: 'RSS Feed Title'
     FEED_DESCRIPTION: 'RSS Feed Description'
     ENABLE_CACHE: 'Enable cache'
+    HEADER_ACTIVE: 'Display turbo page'
 
 ru:
   PLUGIN_YANDEX_TURBO:
@@ -11,3 +12,4 @@ ru:
     FEED_TITLE: 'Заголовок ленты RSS'
     FEED_DESCRIPTION: 'Описание ленты RSS'
     ENABLE_CACHE: 'Включить кэш'
+    HEADER_ACTIVE: 'Отображать турбо-страницу'

@@ -2,8 +2,9 @@
 namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
-use Grav\Common\Plugin;
+use Grav\Common\Data;
 use Grav\Common\Grav;
+use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
 
@@ -25,7 +26,8 @@ class YandexTurboPlugin extends Plugin
             'onPluginsInitialized' => [
                 ['autoload', 100000], // TODO: Remove when plugin requires Grav >=1.7
                 ['onPluginsInitialized', 0]
-            ]
+            ],
+            'onBlueprintCreated' => ['onBlueprintCreated', 0]
         ];
     }
 
@@ -107,6 +109,7 @@ class YandexTurboPlugin extends Plugin
                     $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
                     $entry->media = $page->media()->images();
                     $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
+                    $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
                     $this->items[$page->route()] = $entry;
                 }
             }
@@ -149,5 +152,27 @@ class YandexTurboPlugin extends Plugin
     {
         $twig = $this->grav['twig'];
         $twig->twig_vars['items'] = $this->items;
+    }
+
+    /**
+     * Extend page blueprints with feed configuration options.
+     *
+     * @param Event $event
+     */
+    public function onBlueprintCreated(Event $event)
+    {
+        static $inEvent = false;
+
+        /** @var Data\Blueprint $blueprint */
+        $blueprint = $event['blueprint'];
+        if (!$inEvent && $blueprint->get('form/fields/tabs', null, '/')) {
+            if (!in_array($blueprint->getFilename(), array_keys($this->grav['pages']->modularTypes()))) {
+                $inEvent = true;
+                $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
+                $extends = $blueprints->get('yandex_turbo');
+                $blueprint->extend($extends, true);
+                $inEvent = false;
+            }
+        }
     }
 }
