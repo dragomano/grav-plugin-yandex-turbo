@@ -10,9 +10,7 @@ use RocketTheme\Toolbox\Event\Event;
 
 class YandexTurboPlugin extends Plugin
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items = [];
 
     /**
@@ -87,11 +85,13 @@ class YandexTurboPlugin extends Plugin
         if ($this->config->get('plugins.yandex-turbo.enable_cache')) {
             $cache = Grav::instance()['cache'];
             $cache_id = md5('yandex_turbo_plugin');
+
+            if ($data = $cache->fetch($cache_id)) {
+                $this->items = $data;
+            }
         }
 
-        if ($cache_id && $data = $cache->fetch($cache_id)) {
-            $this->items = $data;
-        } else {
+        if (empty($this->items)) {
             /** @var Pages $pages */
             $pages = $this->grav['pages'];
             $collection = $pages->all();
@@ -113,10 +113,10 @@ class YandexTurboPlugin extends Plugin
                     $this->items[$page->route()] = $entry;
                 }
             }
+        }
 
-            if ($cache_id) {
-                $cache->save($cache_id, $this->items);
-            }
+        if (!empty($cache_id)) {
+            $cache->save($cache_id, $this->items);
         }
 
         $this->grav->fireEvent('onYandexTurboProcessed', new Event(['turbo' => &$this->items]));
