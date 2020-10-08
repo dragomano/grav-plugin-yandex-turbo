@@ -1,3 +1,9 @@
+# v0.3.2
+## 10/08/2020
+
+1. [](#bugfix)
+    * Fixed some undefined errors
+
 # v0.3.1
 ## 09/21/2020
 
