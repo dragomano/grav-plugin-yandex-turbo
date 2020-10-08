@@ -106,10 +106,23 @@ class YandexTurboPlugin extends Plugin
                     $entry->title = $page->title();
                     $entry->link = $page->canonical();
                     $entry->date = date(DATE_RFC822, $page->date());
-                    $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
+
+                    if (!empty($header->metadata['author'])) {
+                        $entry->author = $header->metadata['author'];
+                    } elseif (!empty($header->author['name'])) {
+                        $entry->author = $header->author['name'];
+                    }
+
                     $entry->media = $page->media()->images();
-                    $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
+
+                    if (!empty($header->metadata['description'])) {
+                        $entry->content = $header->metadata['description'];
+                    } else {
+                        $entry->content = strip_tags($page->summary());
+                    }
+
                     $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
+
                     $this->items[$page->route()] = $entry;
                 }
             }
@@ -135,7 +148,9 @@ class YandexTurboPlugin extends Plugin
         if (is_null($page) || $page->route() !== $route) {
             $page = new Page;
             $page->init(new \SplFileInfo(__DIR__ . '/pages/turbo.md'));
+
             unset($this->grav['page']);
+
             $this->grav['page'] = $page;
 
             $twig = $this->grav['twig'];
