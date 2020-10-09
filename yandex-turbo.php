@@ -6,13 +6,12 @@ use Grav\Common\Data;
 use Grav\Common\Grav;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
 class YandexTurboPlugin extends Plugin
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $items = [];
 
     /**
@@ -87,36 +86,63 @@ class YandexTurboPlugin extends Plugin
         if ($this->config->get('plugins.yandex-turbo.enable_cache')) {
             $cache = Grav::instance()['cache'];
             $cache_id = md5('yandex_turbo_plugin');
+
+            if ($data = $cache->fetch($cache_id)) {
+                $this->items = $data;
+            }
         }
 
-        if ($cache_id && $data = $cache->fetch($cache_id)) {
-            $this->items = $data;
-        } else {
-            /** @var Pages $pages */
-            $pages = $this->grav['pages'];
-            $collection = $pages->all();
-            $collection = $collection->visible()->published()->routable()->order('date', 'desc')->slice(0, 1000);
+        if (empty($this->items)) {
+            $content = (array) $this->config->get('plugins.yandex-turbo.content');
 
-            foreach ($collection as $page) {
-                $header = $page->header();
-                $page_ignored = isset($header->external_url) || isset($header->access);
+            if (empty($content)) {
+                /** @var Pages $pages */
+                $pages = $this->grav['pages'];
+                $collection = $pages->all();
+            } else {
+                $collection = new Collection();
+                $page = Grav::instance()['page'];
 
-                if (!$page_ignored) {
-                    $entry = new \stdClass();
-                    $entry->title = $page->title();
-                    $entry->link = $page->canonical();
-                    $entry->date = date(DATE_RFC822, $page->date());
-                    $entry->author = $header->metadata['author'] ?: $header->author['name'] ?: '';
-                    $entry->media = $page->media()->images();
-                    $entry->content = $header->metadata['description'] ?: strip_tags($page->summary());
-                    $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
-                    $this->items[$page->route()] = $entry;
+                foreach ($content as $key => $route) {
+                    $collection->append($page->evaluate(['@page.children' => $route]));
                 }
             }
 
-            if ($cache_id) {
-                $cache->save($cache_id, $this->items);
+            $collection = $collection->published()->routable()->order('date', 'desc')->slice(0, 1000);
+
+            foreach ($collection as $page) {
+                $header = $page->header();
+
+                if (isset($header->external_url) || isset($header->access))
+                    continue;
+
+                $entry = new \stdClass();
+                $entry->title = $page->title();
+                $entry->link = $page->canonical();
+                $entry->date = date(DATE_RFC822, $page->date());
+
+                if (!empty($header->metadata['author'])) {
+                    $entry->author = $header->metadata['author'];
+                } elseif (!empty($header->author['name'])) {
+                    $entry->author = $header->author['name'];
+                }
+
+                $entry->media = $page->media()->images();
+
+                if (!empty($header->metadata['description'])) {
+                    $entry->content = $header->metadata['description'];
+                } else {
+                    $entry->content = strip_tags($page->summary());
+                }
+
+                $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
+
+                $this->items[$page->route()] = $entry;
             }
+        }
+
+        if (!empty($cache_id)) {
+            $cache->save($cache_id, $this->items);
         }
 
         $this->grav->fireEvent('onYandexTurboProcessed', new Event(['turbo' => &$this->items]));
@@ -135,7 +161,9 @@ class YandexTurboPlugin extends Plugin
         if (is_null($page) || $page->route() !== $route) {
             $page = new Page;
             $page->init(new \SplFileInfo(__DIR__ . '/pages/turbo.md'));
+
             unset($this->grav['page']);
+
             $this->grav['page'] = $page;
 
             $twig = $this->grav['twig'];

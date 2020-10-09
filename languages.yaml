@@ -1,6 +1,10 @@
 en:
   PLUGIN_YANDEX_TURBO:
     TITLE: 'Yandex.Turbo'
+    ROUTE: 'Route to Turbo pages'
+    ROUTE_HELP: 'The URL where the RSS feed with Turbo pages will be displayed'
+    CONTENT: 'Content to display'
+    CONTENT_HELP: 'By default, all published pages on the site are displayed. But you can specify a separated section: i. e. /blog'
     FEED_TITLE: 'RSS Feed Title'
     FEED_DESCRIPTION: 'RSS Feed Description'
     ENABLE_CACHE: 'Enable cache'
@@ -9,6 +13,10 @@ en:
 ru:
   PLUGIN_YANDEX_TURBO:
     TITLE: 'Яндекс.Турбо'
+    ROUTE: 'Маршрут к Турбо-страницам'
+    ROUTE_HELP: 'Адрес, по которому будет отображаться RSS-лента с Турбо-страницами'
+    CONTENT: 'Контент для отображения'
+    CONTENT_HELP: 'По умолчанию отображаются все опубликованные страницы сайта. Но можно указать, к примеру, только конкретный раздел: /blog'
     FEED_TITLE: 'Заголовок ленты RSS'
     FEED_DESCRIPTION: 'Описание ленты RSS'
     ENABLE_CACHE: 'Включить кэш'
