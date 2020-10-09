@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">
     <channel>
-        <title>{{ config.plugins['yandex-turbo'].feed_title ?: site.title }}</title>
+        <title>{{ (config.plugins['yandex-turbo'].feed_title ?: site.title)|truncate(240) }}</title>
         <link>{{ uri.rootUrl(true) }}</link>
         <description>{{ config.plugins['yandex-turbo'].feed_description ?: site.metadata.description ?: site.title }}</description>
         <language>{{ site.default_lang }}</language>
@@ -11,11 +11,11 @@
         <item turbo="{{ item.active ? 'true' : 'false' }}">
             <link>{{ item.link }}</link>
             <pubDate>{{ item.date }}</pubDate>
-            <author>{{ item.author ?: site.author.name }}</author>
+            <author>{{ (item.author ?: site.author.name)|truncate(240) }}</author>
             <turbo:content>
                 <![CDATA[
                     <header>
-                        <h1>{{ item.title ?: site.title }}</h1>
+                        <h1>{{ (item.title ?: site.title)|truncate(240) }}</h1>
 {% if item.media %}
 {% set first_image = item.media|first %}
                         <figure>
