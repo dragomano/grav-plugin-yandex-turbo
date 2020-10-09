@@ -4,6 +4,8 @@
 1. [](#new)
     * Added a setting to change the route for Turbo pages
     * Added a setting to set the custom path for your content (`/blog`, etc)
+1. [](#improved)
+    * Added truncate for title, author, and h1 tags in template RSS
 
 # v0.3.2
 ## 10/08/2020
