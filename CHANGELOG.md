@@ -1,3 +1,16 @@
+# v0.4
+## 10/09/2020
+
+1. [](#new)
+    * Added a setting to change the route for Turbo pages
+    * Added a setting to set the custom path for your content (`/blog`, etc)
+
+# v0.3.2
+## 10/08/2020
+
+1. [](#bugfix)
+    * Fixed some undefined errors
+
 # v0.3.1
 ## 09/21/2020
 
