@@ -6,6 +6,7 @@ use Grav\Common\Data;
 use Grav\Common\Grav;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
+use Grav\Common\Page\Collection;
 use RocketTheme\Toolbox\Event\Event;
 
 class YandexTurboPlugin extends Plugin
@@ -92,39 +93,51 @@ class YandexTurboPlugin extends Plugin
         }
 
         if (empty($this->items)) {
-            /** @var Pages $pages */
-            $pages = $this->grav['pages'];
-            $collection = $pages->all();
-            $collection = $collection->visible()->published()->routable()->order('date', 'desc')->slice(0, 1000);
+            $content = (array) $this->config->get('plugins.yandex-turbo.content');
+
+            if (empty($content)) {
+                /** @var Pages $pages */
+                $pages = $this->grav['pages'];
+                $collection = $pages->all();
+            } else {
+                $collection = new Collection();
+                $page = Grav::instance()['page'];
+
+                foreach ($content as $key => $route) {
+                    $collection->append($page->evaluate(['@page.children' => $route]));
+                }
+            }
+
+            $collection = $collection->published()->routable()->order('date', 'desc')->slice(0, 1000);
 
             foreach ($collection as $page) {
                 $header = $page->header();
-                $page_ignored = isset($header->external_url) || isset($header->access);
 
-                if (!$page_ignored) {
-                    $entry = new \stdClass();
-                    $entry->title = $page->title();
-                    $entry->link = $page->canonical();
-                    $entry->date = date(DATE_RFC822, $page->date());
+                if (isset($header->external_url) || isset($header->access))
+                    continue;
 
-                    if (!empty($header->metadata['author'])) {
-                        $entry->author = $header->metadata['author'];
-                    } elseif (!empty($header->author['name'])) {
-                        $entry->author = $header->author['name'];
-                    }
+                $entry = new \stdClass();
+                $entry->title = $page->title();
+                $entry->link = $page->canonical();
+                $entry->date = date(DATE_RFC822, $page->date());
 
-                    $entry->media = $page->media()->images();
-
-                    if (!empty($header->metadata['description'])) {
-                        $entry->content = $header->metadata['description'];
-                    } else {
-                        $entry->content = strip_tags($page->summary());
-                    }
-
-                    $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
-
-                    $this->items[$page->route()] = $entry;
+                if (!empty($header->metadata['author'])) {
+                    $entry->author = $header->metadata['author'];
+                } elseif (!empty($header->author['name'])) {
+                    $entry->author = $header->author['name'];
                 }
+
+                $entry->media = $page->media()->images();
+
+                if (!empty($header->metadata['description'])) {
+                    $entry->content = $header->metadata['description'];
+                } else {
+                    $entry->content = strip_tags($page->summary());
+                }
+
+                $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
+
+                $this->items[$page->route()] = $entry;
             }
         }
 

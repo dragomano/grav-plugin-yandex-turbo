@@ -1,7 +1,7 @@
 name: Yandex Turbo
 slug: yandex-turbo
 type: plugin
-version: 0.3.2
+version: 0.4
 description: "Generates a special **RSS feed** with blog pages, in accordance with the Yandex.Turbo technology."
 icon: rss
 author:
@@ -28,6 +28,22 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+
+    route:
+      type: text
+      size: medium
+      label: PLUGIN_YANDEX_TURBO.ROUTE
+      help: PLUGIN_YANDEX_TURBO.ROUTE_HELP
+      placeholder: /turbo
+      validate:
+        pattern: "/([a-z-_]+/?)+"
+
+    content:
+      type: array
+      label: PLUGIN_YANDEX_TURBO.CONTENT
+      help: PLUGIN_YANDEX_TURBO.CONTENT_HELP
+      value_only: true
+      placeholder_value: '/blog'
 
     feed_title:
       type: text
