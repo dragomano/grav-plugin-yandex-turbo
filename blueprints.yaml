@@ -43,7 +43,7 @@ form:
       label: PLUGIN_YANDEX_TURBO.CONTENT
       help: PLUGIN_YANDEX_TURBO.CONTENT_HELP
       value_only: true
-      placeholder_value: '/'
+      placeholder_value: '/blog'
 
     feed_title:
       type: text

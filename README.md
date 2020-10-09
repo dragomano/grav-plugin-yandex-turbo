@@ -45,6 +45,7 @@ Before configuring this plugin, you should copy the `user/plugins/yandex-turbo/y
 ```yaml
 enabled: true
 route: '/turbo'
+content: null
 feed_title: null
 feed_description: null
 enable_cache: false

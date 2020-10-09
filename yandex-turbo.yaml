@@ -1,5 +1,6 @@
 enabled: true
 route: '/turbo'
+content: null
 feed_title: null
 feed_description: null
 enable_cache: false
