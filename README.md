@@ -45,9 +45,11 @@ Before configuring this plugin, you should copy the `user/plugins/yandex-turbo/y
 ```yaml
 enabled: true
 route: '/turbo'
-content: null
 feed_title: null
 feed_description: null
+content: null
+sort_by: default
+sort_dir: asc
 image_effects:
   resize: false
   cropResize: true
