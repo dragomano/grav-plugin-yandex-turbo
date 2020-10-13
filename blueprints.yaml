@@ -55,6 +55,38 @@ form:
       size: medium
       label: PLUGIN_YANDEX_TURBO.FEED_DESCRIPTION
 
+    image_effects:
+      type: checkboxes
+      label: PLUGIN_YANDEX_TURBO.IMAGE_EFFECTS
+      description: <a href="https://learn.getgrav.org/16/content/media#image-actions" rel="noopener" target="_blank">Документация</a>
+      options:
+        resize: resize
+        cropResize: cropResize
+        grayscale: grayscale
+      use: keys
+
+    image_width:
+      type: text
+      size: x-small
+      label: PLUGIN_YANDEX_TURBO.IMAGE_WIDTH
+      help: PLUGIN_YANDEX_TURBO.IMAGE_SIZES_HELP
+      append: px
+      default: 300
+      validate:
+        type: number
+        min: 50
+
+    image_height:
+      type: text
+      size: x-small
+      label: PLUGIN_YANDEX_TURBO.IMAGE_HEIGHT
+      help: PLUGIN_YANDEX_TURBO.IMAGE_SIZES_HELP
+      append: px
+      default: 200
+      validate:
+        type: number
+        min: 50
+
     enable_cache:
       type: toggle
       label: PLUGIN_YANDEX_TURBO.ENABLE_CACHE
