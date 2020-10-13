@@ -38,13 +38,6 @@ form:
       validate:
         pattern: "/([a-z-_]+/?)+"
 
-    content:
-      type: array
-      label: PLUGIN_YANDEX_TURBO.CONTENT
-      help: PLUGIN_YANDEX_TURBO.CONTENT_HELP
-      value_only: true
-      placeholder_value: '/blog'
-
     feed_title:
       type: text
       size: medium
@@ -54,6 +47,33 @@ form:
       type: text
       size: medium
       label: PLUGIN_YANDEX_TURBO.FEED_DESCRIPTION
+
+    content:
+      type: array
+      label: PLUGIN_YANDEX_TURBO.CONTENT
+      help: PLUGIN_YANDEX_TURBO.CONTENT_HELP
+      value_only: true
+      placeholder_value: '/blog'
+
+    sort_by:
+      type: select
+      label: PLUGIN_YANDEX_TURBO.SORT_BY
+      default: 'date'
+      options:
+        default: PLUGIN_YANDEX_TURBO.SORT_DEFAULT
+        title: PLUGIN_YANDEX_TURBO.SORT_TITLE
+        date: PLUGIN_YANDEX_TURBO.SORT_DATE
+        modified: PLUGIN_YANDEX_TURBO.SORT_MODIFIED
+        folder: PLUGIN_YANDEX_TURBO.SORT_FOLDER
+        publish_date: PLUGIN_YANDEX_TURBO.SORT_PUBLISH_DATE
+
+    sort_dir:
+      type: select
+      label: PLUGIN_YANDEX_TURBO.SORT_DIRECTION
+      default: 'desc'
+      options:
+        desc: PLUGIN_YANDEX_TURBO.DIRECTION_DESC
+        asc: PLUGIN_YANDEX_TURBO.DIRECTION_ASC
 
     image_effects:
       type: checkboxes

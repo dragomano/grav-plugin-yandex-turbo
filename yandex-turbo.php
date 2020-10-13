@@ -108,7 +108,9 @@ class YandexTurboPlugin extends Plugin
                 }
             }
 
-            $collection = $collection->published()->routable()->order('date', 'desc')->slice(0, 1000);
+            $by = $this->config->get('plugins.yandex-turbo.sort_by') ?? 'date';
+            $dir = $this->config->get('plugins.yandex-turbo.sort_dir') ?? 'desc';
+            $collection = $collection->published()->routable()->order($by, $dir)->slice(0, 1000);
 
             foreach ($collection as $page) {
                 $header = $page->header();
