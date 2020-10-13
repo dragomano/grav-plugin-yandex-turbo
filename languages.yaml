@@ -1,23 +1,31 @@
 en:
   PLUGIN_YANDEX_TURBO:
     TITLE: 'Yandex.Turbo'
+    HEADER_ACTIVE: 'Display turbo page'
     ROUTE: 'Route to Turbo pages'
     ROUTE_HELP: 'The URL where the RSS feed with Turbo pages will be displayed'
     CONTENT: 'Content to display'
     CONTENT_HELP: 'By default, all published pages on the site are displayed. But you can specify a separated section: i. e. /blog'
     FEED_TITLE: 'RSS Feed Title'
     FEED_DESCRIPTION: 'RSS Feed Description'
+    IMAGE_EFFECTS: 'Effects applied to images'
+    IMAGE_WIDTH: 'Image width'
+    IMAGE_HEIGHT: 'Image height'
+    IMAGE_SIZES_HELP: 'Used together with the resize and cropResize filters.'
     ENABLE_CACHE: 'Enable cache'
-    HEADER_ACTIVE: 'Display turbo page'
 
 ru:
   PLUGIN_YANDEX_TURBO:
     TITLE: 'Яндекс.Турбо'
+    HEADER_ACTIVE: 'Отображать турбо-страницу'
     ROUTE: 'Маршрут к Турбо-страницам'
     ROUTE_HELP: 'Адрес, по которому будет отображаться RSS-лента с Турбо-страницами'
     CONTENT: 'Контент для отображения'
     CONTENT_HELP: 'По умолчанию отображаются все опубликованные страницы сайта. Но можно указать, к примеру, только конкретный раздел: /blog'
     FEED_TITLE: 'Заголовок ленты RSS'
     FEED_DESCRIPTION: 'Описание ленты RSS'
+    IMAGE_EFFECTS: 'Эффекты, применяемые к изображениям'
+    IMAGE_WIDTH: 'Ширина изображений'
+    IMAGE_HEIGHT: 'Высота изображений'
+    IMAGE_SIZES_HELP: 'Используется вместе с фильтрами resize и cropResize.'
     ENABLE_CACHE: 'Включить кэш'
-    HEADER_ACTIVE: 'Отображать турбо-страницу'

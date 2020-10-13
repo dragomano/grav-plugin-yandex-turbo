@@ -48,6 +48,12 @@ route: '/turbo'
 content: null
 feed_title: null
 feed_description: null
+image_effects:
+  resize: false
+  cropResize: true
+  grayscale: false
+image_width: 300
+image_height: 200
 enable_cache: false
 ```
 
