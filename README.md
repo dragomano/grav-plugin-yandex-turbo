@@ -48,8 +48,8 @@ route: '/turbo'
 feed_title: null
 feed_description: null
 content: null
-sort_by: default
-sort_dir: asc
+sort_by: date
+sort_dir: desc
 image_effects:
   resize: false
   cropResize: true

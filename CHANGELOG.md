@@ -1,3 +1,11 @@
+# v0.5.0
+## 10/15/2020
+
+1. [](#new)
+    * Added custom effects for images
+    * Added settings for image width and height (are required for some custom effects)
+    * Added a custom sorting for pages (by title, by slug, by date, manual ordering, etc)
+
 # v0.4.0
 ## 10/09/2020
 

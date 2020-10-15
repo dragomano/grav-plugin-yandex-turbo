@@ -20,10 +20,10 @@
                         <h1>{{ (item.title ?: site.title)|truncate(240) }}</h1>
 {% if item.media %}
 {% set first_image = item.media|first %}
-{% if image_effects['resize']%}
+{% if image_effects['resize'] %}
 {% set first_image = first_image.resize(image_width,image_height) %}
 {% endif %}
-{% if image_effects['cropResize']%}
+{% if image_effects['cropResize'] %}
 {% set first_image = first_image.cropResize(image_width,image_height) %}
 {% endif %}
 {% if image_effects['grayscale'] %}

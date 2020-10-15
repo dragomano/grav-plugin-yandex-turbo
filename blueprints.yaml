@@ -1,7 +1,7 @@
 name: Yandex Turbo
 slug: yandex-turbo
 type: plugin
-version: 0.4.0
+version: 0.5.0
 description: "Generates a special **RSS feed** with blog pages, in accordance with the Yandex.Turbo technology."
 icon: rss
 author:
@@ -62,10 +62,11 @@ form:
       options:
         default: PLUGIN_YANDEX_TURBO.SORT_DEFAULT
         title: PLUGIN_YANDEX_TURBO.SORT_TITLE
+        slug: PLUGIN_YANDEX_TURBO.SORT_SLUG
         date: PLUGIN_YANDEX_TURBO.SORT_DATE
         modified: PLUGIN_YANDEX_TURBO.SORT_MODIFIED
-        folder: PLUGIN_YANDEX_TURBO.SORT_FOLDER
         publish_date: PLUGIN_YANDEX_TURBO.SORT_PUBLISH_DATE
+        manual: PLUGIN_YANDEX_TURBO.SORT_MANUAL
 
     sort_dir:
       type: select
@@ -78,7 +79,7 @@ form:
     image_effects:
       type: checkboxes
       label: PLUGIN_YANDEX_TURBO.IMAGE_EFFECTS
-      description: <a href="https://learn.getgrav.org/16/content/media#image-actions" rel="noopener" target="_blank">Документация</a>
+      description: PLUGIN_YANDEX_TURBO.IMAGE_EFFECT_DESC
       options:
         resize: resize
         cropResize: cropResize

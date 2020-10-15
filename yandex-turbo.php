@@ -104,13 +104,23 @@ class YandexTurboPlugin extends Plugin
                 $page = Grav::instance()['page'];
 
                 foreach ($content as $key => $route) {
-                    $collection->append($page->evaluate(['@page.children' => $route]));
+                    if ($route === '/') {
+                        $collection->append($page->evaluate(['@page.self' => $route, '@page' => $route]));
+                    } else {
+                        $collection->append($page->evaluate(['@page.self' => $route, '@page.children' => $route]));
+                    }
                 }
             }
 
             $by = $this->config->get('plugins.yandex-turbo.sort_by') ?? 'date';
             $dir = $this->config->get('plugins.yandex-turbo.sort_dir') ?? 'desc';
-            $collection = $collection->published()->routable()->order($by, $dir)->slice(0, 1000);
+            $options = [$by, $dir];
+
+            if ($by === 'manual' && !empty($content)) {
+                $options = array_merge($options, [$content, SORT_NUMERIC]);
+            }
+
+            $collection = $collection->published()->routable()->order(...$options)->slice(0, 1000);
 
             foreach ($collection as $page) {
                 $header = $page->header();
@@ -121,7 +131,12 @@ class YandexTurboPlugin extends Plugin
                 $entry = new \stdClass();
                 $entry->title = $page->title();
                 $entry->link = $page->canonical();
-                $entry->date = date(DATE_RFC822, $page->date());
+
+                $date = $by == 'modified' ? $page->modified() : $page->date();
+                if ($by == 'publish_date' && !empty($page->publishDate()))
+                    $date = $page->publishDate();
+
+                $entry->date = date(DATE_RFC822, $date);
 
                 if (!empty($header->metadata['author'])) {
                     $entry->author = $header->metadata['author'];
