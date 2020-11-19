@@ -9,6 +9,7 @@
 {% set image_effects = config.plugins['yandex-turbo'].image_effects ?? [] %}
 {% set image_width   = config.plugins['yandex-turbo'].image_width ?? 100 %}
 {% set image_height  = config.plugins['yandex-turbo'].image_height ?? 100 %}
+{% set max_content_length = config.plugins['yandex-turbo'].max_content_length ?? 150 %}
 {% for item in items %}
         <item turbo="{{ item.active ? 'true' : 'false' }}">
             <link>{{ item.link }}</link>
@@ -34,7 +35,7 @@
                         </figure>
 {% endif %}
                     </header>
-                    {{ item.content|safe_truncate_html }}
+                    {{ item.content|safe_truncate(max_content_length) }}
                 ]]>
             </turbo:content>
         </item>
