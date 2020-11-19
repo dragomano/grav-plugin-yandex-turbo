@@ -1,3 +1,11 @@
+# v0.6.0
+## 11/19/2020
+
+1. [](#new)
+    * Added a setting to change the maximum length of entry content (150 by default)
+1. [](#improved)
+    * Changed a field type for image_width and image_height (from "text" to "number")
+
 # v0.5.0
 ## 10/15/2020
 

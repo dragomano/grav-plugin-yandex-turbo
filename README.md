@@ -47,6 +47,7 @@ enabled: true
 route: '/turbo'
 feed_title: null
 feed_description: null
+max_content_length: 150
 content: null
 sort_by: date
 sort_dir: desc
