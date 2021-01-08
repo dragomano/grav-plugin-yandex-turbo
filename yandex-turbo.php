@@ -146,15 +146,16 @@ class YandexTurboPlugin extends Plugin
 
                 $entry->media = $page->media()->images();
 
-                if (!empty($header->metadata['description'])) {
-                    $entry->content = $header->metadata['description'];
+                if ($this->config->get('plugins.yandex-turbo.sort_by') === 'desc') {
+                    $entry->content = !empty($header->metadata['description']) ? $header->metadata['description'] : $page->summary();
                 } else {
-                    $entry->content = strip_tags($page->summary());
+                    $entry->content = $page->content();
                 }
 
                 $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
 
-                $this->items[$page->route()] = $entry;
+                if (!empty($entry->content))
+                    $this->items[$page->route()] = $entry;
             }
         }
 

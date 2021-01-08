@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:yandex="http://news.yandex.ru" xmlns:media="http://search.yahoo.com/mrss/" xmlns:turbo="http://turbo.yandex.ru" version="2.0">
     <channel>
+        <turbo:cms_plugin>5006F887572400597935F2F856C2AC97</turbo:cms_plugin>
         <title>{{ (config.plugins['yandex-turbo'].feed_title ?: site.title)|truncate(240) }}</title>
         <link>{{ uri.rootUrl(true) }}</link>
         <description>{{ config.plugins['yandex-turbo'].feed_description ?: site.metadata.description ?: site.title }}</description>
         <language>{{ site.default_lang }}</language>
-        <turbo:cms_plugin>5006F887572400597935F2F856C2AC97</turbo:cms_plugin>
 {% set image_effects = config.plugins['yandex-turbo'].image_effects ?? [] %}
 {% set image_width   = config.plugins['yandex-turbo'].image_width ?? 100 %}
 {% set image_height  = config.plugins['yandex-turbo'].image_height ?? 100 %}
 {% set max_content_length = config.plugins['yandex-turbo'].max_content_length ?? 150 %}
 {% for item in items %}
         <item turbo="{{ item.active ? 'true' : 'false' }}">
+            <turbo:extendedHtml>true</turbo:extendedHtml>
             <link>{{ item.link }}</link>
+{% if config.plugins['yandex-turbo'].show_pubdate %}
             <pubDate>{{ item.date }}</pubDate>
+{% endif %}
+{% if config.plugins['yandex-turbo'].show_author %}
             <author>{{ (item.author ?: site.author.name)|truncate(240) }}</author>
+{% endif %}
             <turbo:content>
                 <![CDATA[
                     <header>
@@ -35,7 +40,11 @@
                         </figure>
 {% endif %}
                     </header>
+{% if config.plugins['yandex-turbo'].content_source == 'desc' %}
                     {{ item.content|safe_truncate(max_content_length) }}
+{% else %}
+                    {{ item.content|raw }}
+{% endif %}
                 ]]>
             </turbo:content>
         </item>
