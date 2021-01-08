@@ -1,7 +1,7 @@
 name: Yandex Turbo
 slug: yandex-turbo
 type: plugin
-version: 0.6.0
+version: 0.7.0
 description: "Generates a special **RSS feed** with blog pages, in accordance with the Yandex.Turbo technology."
 icon: rss
 author:
@@ -65,6 +65,37 @@ form:
         type: number
         min: 0
 
+    content_source:
+      type: select
+      label: PLUGIN_YANDEX_TURBO.CONTENT_SOURCE
+      description: PLUGIN_YANDEX_TURBO.CONTENT_SOURCE_DESC
+      default: 'desc'
+      options:
+        desc: PLUGIN_YANDEX_TURBO.PAGE_DESCRIPTION
+        content: PLUGIN_YANDEX_TURBO.PAGE_CONTENT
+
+    show_author:
+      type: toggle
+      label: PLUGIN_YANDEX_TURBO.SHOW_AUTHOR
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
+      validate:
+        type: bool
+
+    show_pubdate:
+      type: toggle
+      label: PLUGIN_YANDEX_TURBO.SHOW_PUBDATE
+      highlight: 1
+      default: 1
+      options:
+        1: PLUGIN_ADMIN.YES
+        0: PLUGIN_ADMIN.NO
+      validate:
+        type: bool
+
     sort_by:
       type: select
       label: PLUGIN_YANDEX_TURBO.SORT_BY
@@ -121,7 +152,7 @@ form:
     enable_cache:
       type: toggle
       label: PLUGIN_YANDEX_TURBO.ENABLE_CACHE
-      highlight: 0
+      highlight: 1
       options:
         1: PLUGIN_ADMIN.YES
         0: PLUGIN_ADMIN.NO

@@ -1,3 +1,11 @@
+# v0.7.0
+## 01/08/2021
+
+1. [](#new)
+    * Added a setting to change content source for the feed items (page description or page content)
+    * Added a setting to toggle displaying the author name of each page
+    * Added a setting to toggle displaying the publication date of each page
+
 # v0.6.0
 ## 11/19/2020
 

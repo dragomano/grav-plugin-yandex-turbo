@@ -49,6 +49,9 @@ feed_title: null
 feed_description: null
 max_content_length: 150
 content: null
+content_source: desc
+show_author: true
+show_pubdate: true
 sort_by: date
 sort_dir: desc
 image_effects:
@@ -63,3 +66,14 @@ enable_cache: false
 Note that if you use the Admin Plugin, a file with your configuration named yandex-turbo.yaml will be saved in the `user/config/plugins/`-folder once the configuration is saved in the Admin.
 
 При сохранении настроек через плагин админки нужный файл с настройками плагина будет создан автоматически.
+
+## How to remove a specific page from the feed | Как убрать конкретную страницу из ленты
+
+Add the following lines to the header of the file (the frontmatter):
+
+Добавьте в шапку файла строчки:
+
+```yaml
+yandex_turbo:
+    active: false
+```

@@ -1,14 +1,17 @@
 enabled: true
-route: '/turbo'
+route: /turbo
 feed_title: null
 feed_description: null
 max_content_length: 150
 content: null
+content_source: desc
+show_author: true
+show_pubdate: true
 sort_by: date
 sort_dir: desc
 image_effects:
-  resize: false
   cropResize: true
+  resize: false
   grayscale: false
 image_width: 300
 image_height: 200
