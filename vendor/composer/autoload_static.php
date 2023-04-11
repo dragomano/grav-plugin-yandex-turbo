@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInite73e532505e0cb6a4af593444bdb96cf
 {
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Grav\\Plugin\\YandexTurboPlugin' => __DIR__ . '/../..' . '/yandex-turbo.php',
     );
 
