@@ -62,7 +62,7 @@ ru:
     DIRECTION_DESC: 'По убыванию'
     DIRECTION_ASC: 'По возрастанию'
     IMAGE_EFFECTS: 'Эффекты, применяемые к изображениям'
-    IMAGE_EFFECT_DESC: '<a href="https://grav-docs.ru/16/content/media#deystviya-s-izobrazheniyami" rel="noopener" target="_blank">Документация</a>'
+    IMAGE_EFFECT_DESC: '<a href="https://grav-docs.ru/content/media/?h=resize#deistviia-s-izobrazheniiami" rel="noopener" target="_blank">Документация</a>'
     IMAGE_WIDTH: 'Ширина изображений'
     IMAGE_HEIGHT: 'Высота изображений'
     IMAGE_SIZES_HELP: 'Используется вместе с фильтрами resize и cropResize.'

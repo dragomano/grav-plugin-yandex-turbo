@@ -13,14 +13,14 @@
     }
   ],
   "require": {
-    "php": ">=7.1.3"
+    "php": ">=7.3.6"
   },
   "autoload": {
     "classmap": ["yandex-turbo.php"]
   },
   "config": {
     "platform": {
-      "php": "7.1.3"
+      "php": "7.3.6"
     }
   }
 }
