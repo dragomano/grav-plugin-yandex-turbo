@@ -1,12 +1,13 @@
 <?php
 namespace Grav\Plugin;
 
-use Composer\Autoload\ClassLoader;
 use Grav\Common\Data;
 use Grav\Common\Grav;
+use Grav\Common\Page\Pages;
 use Grav\Common\Plugin;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Collection;
+use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
 
 class YandexTurboPlugin extends Plugin
@@ -22,22 +23,9 @@ class YandexTurboPlugin extends Plugin
     public static function getSubscribedEvents()
     {
         return [
-            'onPluginsInitialized' => [
-                ['autoload', 100000], // TODO: Remove when plugin requires Grav >=1.7
-                ['onPluginsInitialized', 0]
-            ],
+            'onPluginsInitialized' => ['onPluginsInitialized', 0],
             'onBlueprintCreated' => ['onBlueprintCreated', 0]
         ];
-    }
-
-    /**
-    * Composer autoload.
-    *is
-    * @return ClassLoader
-    */
-    public function autoload(): ClassLoader
-    {
-        return require __DIR__ . '/vendor/autoload.php';
     }
 
     /**
@@ -103,7 +91,7 @@ class YandexTurboPlugin extends Plugin
                 $collection = new Collection();
                 $page = Grav::instance()['page'];
 
-                foreach ($content as $key => $route) {
+                foreach ($content as $route) {
                     if ($route === '/') {
                         $collection->append($page->evaluate(['@page.self' => $route, '@page' => $route]));
                     } else {
@@ -116,7 +104,7 @@ class YandexTurboPlugin extends Plugin
             $dir = $this->config->get('plugins.yandex-turbo.sort_dir') ?? 'desc';
             $options = [$by, $dir];
 
-            if ($by === 'manual' && !empty($content)) {
+            if ($by === 'manual' && ! empty($content)) {
                 $options = array_merge($options, [$content, SORT_NUMERIC]);
             }
 
@@ -133,33 +121,33 @@ class YandexTurboPlugin extends Plugin
                 $entry->link = $page->canonical();
 
                 $date = $by == 'modified' ? $page->modified() : $page->date();
-                if ($by == 'publish_date' && !empty($page->publishDate()))
+                if ($by == 'publish_date' && ! empty($page->publishDate()))
                     $date = $page->publishDate();
 
                 $entry->date = date(DATE_RFC822, $date);
 
-                if (!empty($header->metadata['author'])) {
+                if (! empty($header->metadata['author'])) {
                     $entry->author = $header->metadata['author'];
-                } elseif (!empty($header->author['name'])) {
+                } elseif (! empty($header->author['name'])) {
                     $entry->author = $header->author['name'];
                 }
 
                 $entry->media = $page->media()->images();
 
                 if ($this->config->get('plugins.yandex-turbo.sort_by') === 'desc') {
-                    $entry->content = !empty($header->metadata['description']) ? $header->metadata['description'] : $page->summary();
+                    $entry->content = ! empty($header->metadata['description']) ? $header->metadata['description'] : $page->summary();
                 } else {
                     $entry->content = $page->content();
                 }
 
-                $entry->active = isset($header->yandex_turbo['active']) ? (bool) $header->yandex_turbo['active'] : true;
+                $entry->active = ! isset($header->yandex_turbo['active']) || $header->yandex_turbo['active'];
 
-                if (!empty($entry->content))
+                if (! empty($entry->content))
                     $this->items[$page->route()] = $entry;
             }
         }
 
-        if (!empty($cache_id)) {
+        if (! empty($cache_id) && ! empty($cache)) {
             $cache->save($cache_id, $this->items);
         }
 
@@ -211,8 +199,8 @@ class YandexTurboPlugin extends Plugin
 
         /** @var Data\Blueprint $blueprint */
         $blueprint = $event['blueprint'];
-        if (!$inEvent && $blueprint->get('form/fields/tabs', null, '/')) {
-            if (!in_array($blueprint->getFilename(), array_keys($this->grav['pages']->modularTypes()))) {
+        if (! $inEvent && $blueprint->get('form/fields/tabs', null, '/')) {
+            if (! in_array($blueprint->getFilename(), array_keys($this->grav['pages']->modularTypes()))) {
                 $inEvent = true;
                 $blueprints = new Data\Blueprints(__DIR__ . '/blueprints/');
                 $extends = $blueprints->get('yandex_turbo');
