@@ -1,3 +1,14 @@
+# v0.8.0
+## 04/11/2023
+
+1. [](#new)
+    * Increase minimum required PHP version (>= 7.3.6)
+    * Increase minimum required Grav version (>= 1.7.40)
+1. [](#improved)
+    * Do some refactoring
+1. [](#bugfix)
+    * Update link to russian docs
+
 # v0.7.0
 ## 01/08/2021
 
