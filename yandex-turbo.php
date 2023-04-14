@@ -42,7 +42,7 @@ class YandexTurboPlugin extends Plugin
 
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
-        $route = $this->config->get('plugins.yandex-turbo.route');
+        $route = $this->config()['route'];
 
         if ($route && $route == $uri->path()) {
             $this->enable([
@@ -71,7 +71,7 @@ class YandexTurboPlugin extends Plugin
      */
     public function onPagesInitialized()
     {
-        if ($this->config->get('plugins.yandex-turbo.enable_cache')) {
+        if ($this->config()['enable_cache']) {
             $cache = Grav::instance()['cache'];
             $cache_id = md5('yandex_turbo_plugin');
 
@@ -81,7 +81,7 @@ class YandexTurboPlugin extends Plugin
         }
 
         if (empty($this->items)) {
-            $content = (array) $this->config->get('plugins.yandex-turbo.content');
+            $content = (array) $this->config()['content'];
 
             if (empty($content)) {
                 /** @var Pages $pages */
@@ -100,8 +100,8 @@ class YandexTurboPlugin extends Plugin
                 }
             }
 
-            $by = $this->config->get('plugins.yandex-turbo.sort_by') ?? 'date';
-            $dir = $this->config->get('plugins.yandex-turbo.sort_dir') ?? 'desc';
+            $by = $this->config()['sort_by'] ?? 'date';
+            $dir = $this->config()['sort_dir'] ?? 'desc';
             $options = [$by, $dir];
 
             if ($by === 'manual' && ! empty($content)) {
@@ -134,7 +134,7 @@ class YandexTurboPlugin extends Plugin
 
                 $entry->media = $page->media()->images();
 
-                if ($this->config->get('plugins.yandex-turbo.sort_by') === 'desc') {
+                if ($this->config()['sort_by'] === 'desc') {
                     $entry->content = ! empty($header->metadata['description']) ? $header->metadata['description'] : $page->summary();
                 } else {
                     $entry->content = $page->content();
@@ -159,10 +159,10 @@ class YandexTurboPlugin extends Plugin
      *
      * @return void
      */
-    public function onPageInitialized()
+    public function onPageInitialized(Event $event)
     {
         $page = $event['page'] ?? null;
-        $route = $this->config->get('plugins.yandex-turbo.route');
+        $route = $this->config()['route'];
 
         if (is_null($page) || $page->route() !== $route) {
             $page = new Page;
